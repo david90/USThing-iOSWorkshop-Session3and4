@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SKYKit
 
 class ViewController: UIViewController {
 
@@ -29,15 +30,53 @@ class ViewController: UIViewController {
     }
     
     func updateUserStatus() {
-        
+        if((SKYContainer.default().currentUserRecordID) != nil) {
+            print("Logged in ")
+        } else {
+            print("Not Logged in ")
+        }
     }
     
     @IBAction func loginButtonDidTap(_ sender: AnyObject) {
-        print("Login!")
+        let email = self.emailField.text!
+        let password = self.passwordField.text!
+        
+        print("Login! \(email) \(password)")
+        
+        SKYContainer.default().login(withEmail: emailField.text, password: passwordField.text) { (user, error) in
+            if (error != nil) {
+                
+                let meError = error as NSError!
+                
+                let alert = UIAlertController(title: "Error logging in", message:meError?.skyErrorMessage(), preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            print("Log in as: \(user)")
+            self.updateUserStatus()
+        }
     }
+    
     @IBAction func signupButtonDidTap(_ sender: AnyObject) {
-        print("Signup!")
-    }
+        let email = self.emailField.text!
+        let password = self.passwordField.text!
+        
+        print("Signup! \(email) \(password)")
+        SKYContainer.default().signup(withEmail: emailField.text, password: passwordField.text) { (user, error) in
+            if (error != nil) {
+                
+                let meError = error as NSError!
+                
+                let alert = UIAlertController(title: "Error signing up", message:meError?.skyErrorMessage(), preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            print("Signed up as: \(user)")
+            self.updateUserStatus()
+            }
+        }
 
 
 }
