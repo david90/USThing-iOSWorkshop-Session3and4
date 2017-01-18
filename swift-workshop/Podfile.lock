@@ -1,0 +1,22 @@
+PODS:
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
+  - SKYKit (0.21.0):
+    - SKYKit/Core (= 0.21.0)
+  - SKYKit/Core (0.21.0):
+    - FMDB (~> 2.5)
+    - SocketRocket (~> 0.4)
+  - SocketRocket (0.5.1)
+
+DEPENDENCIES:
+  - SKYKit
+
+SPEC CHECKSUMS:
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  SKYKit: 189ca397d45c08d9559d744c2ac0640a13b41072
+  SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
+
+PODFILE CHECKSUM: 9f96288a5d25b47b201cc5d01037d0ea45d71c6a
+
+COCOAPODS: 1.1.1

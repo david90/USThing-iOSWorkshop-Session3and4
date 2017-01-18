@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510200CDC3EB08D1AADE95EF /* Pods_swift_workshop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73D66BD76A1CA7CD66B86C5 /* Pods_swift_workshop.framework */; };
 		6365A6191E2F839800031C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6365A6181E2F839800031C8F /* AppDelegate.swift */; };
 		6365A61B1E2F839800031C8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6365A61A1E2F839800031C8F /* ViewController.swift */; };
 		6365A61E1E2F839800031C8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6365A61C1E2F839800031C8F /* Main.storyboard */; };
@@ -24,6 +25,9 @@
 		6365A6221E2F839800031C8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6365A6251E2F839800031C8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6365A6271E2F839800031C8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7B68C4D86EFA9106F4F33515 /* Pods-swift-workshop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swift-workshop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-swift-workshop/Pods-swift-workshop.debug.xcconfig"; sourceTree = "<group>"; };
+		A1E4C7DF56A536034DF9DC1F /* Pods-swift-workshop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swift-workshop.release.xcconfig"; path = "Pods/Target Support Files/Pods-swift-workshop/Pods-swift-workshop.release.xcconfig"; sourceTree = "<group>"; };
+		F73D66BD76A1CA7CD66B86C5 /* Pods_swift_workshop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_swift_workshop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				510200CDC3EB08D1AADE95EF /* Pods_swift_workshop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38032736B275DDFCBF3D62D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F73D66BD76A1CA7CD66B86C5 /* Pods_swift_workshop.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6365A60C1E2F839800031C8F = {
 			isa = PBXGroup;
 			children = (
 				6365A6171E2F839800031C8F /* swift-workshop */,
 				6365A6161E2F839800031C8F /* Products */,
+				F9C1849429754CDA066F9CDB /* Pods */,
+				38032736B275DDFCBF3D62D2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +82,15 @@
 			path = "swift-workshop";
 			sourceTree = "<group>";
 		};
+		F9C1849429754CDA066F9CDB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B68C4D86EFA9106F4F33515 /* Pods-swift-workshop.debug.xcconfig */,
+				A1E4C7DF56A536034DF9DC1F /* Pods-swift-workshop.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6365A62A1E2F839800031C8F /* Build configuration list for PBXNativeTarget "swift-workshop" */;
 			buildPhases = (
+				B442ECF2C0F734A6BA66FF3B /* [CP] Check Pods Manifest.lock */,
 				6365A6111E2F839800031C8F /* Sources */,
 				6365A6121E2F839800031C8F /* Frameworks */,
 				6365A6131E2F839800031C8F /* Resources */,
+				09BA02B5D05461B17F9C03EA /* [CP] Embed Pods Frameworks */,
+				A32DDB311872D7F717294CA4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,6 +160,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		09BA02B5D05461B17F9C03EA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-swift-workshop/Pods-swift-workshop-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A32DDB311872D7F717294CA4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-swift-workshop/Pods-swift-workshop-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B442ECF2C0F734A6BA66FF3B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6365A6111E2F839800031C8F /* Sources */ = {
@@ -262,6 +337,7 @@
 		};
 		6365A62B1E2F839800031C8F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B68C4D86EFA9106F4F33515 /* Pods-swift-workshop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "swift-workshop/Info.plist";
@@ -275,6 +351,7 @@
 		};
 		6365A62C1E2F839800031C8F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1E4C7DF56A536034DF9DC1F /* Pods-swift-workshop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "swift-workshop/Info.plist";
