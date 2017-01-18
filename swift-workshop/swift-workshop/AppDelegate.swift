@@ -17,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        SKYContainer.default().configAddress("https://usthingworkshop17.skygeario.com/")
+        SKYContainer.default().configure(withAPIKey: "ac2d905a3baf4bf5bc2166af0e51d2be")
+
         return true
     }
 
