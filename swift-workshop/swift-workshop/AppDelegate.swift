@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SKYKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
