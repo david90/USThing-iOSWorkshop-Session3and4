@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SKYKit
 
 class NewsTableViewController: UITableViewController {
 
+    var posts = [AnyObject]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.fetchData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -37,6 +40,27 @@ class NewsTableViewController: UITableViewController {
         return 0
     }
 
+    func onCompletion(_ posts:[Any]) {
+        print("There are \(posts.count) posts")
+        print(posts)
+    }
+    
+    func fetchData () {
+        let publicDB = SKYContainer.default().publicCloudDatabase
+        let query = SKYQuery(recordType: "post", predicate: nil)
+        let sortDescriptor = NSSortDescriptor(key: "_created_at", ascending: false)
+        query?.sortDescriptors = [sortDescriptor]
+    
+        publicDB?.perform(query!, completionHandler: { posts, error in
+            if let error = error {
+                print("Error retrieving photos: \(error)")
+                self.onCompletion(posts!)
+            } else {
+                self.onCompletion(posts!)
+            }
+        })
+    }
+    
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
