@@ -73,8 +73,12 @@ class NewsTableViewController: UITableViewController {
         let newsCell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath) as! NewsTableViewCell
         
         // Configure the cell...
-        newsCell.titleLabel.text = "Title"
-        newsCell.contentLabel.text = "Content"
+        
+        let record = self.posts[indexPath.row]
+        let post = record as? SKYRecord
+        newsCell.titleLabel.text = post?.object(forKey: "title") as! String
+        newsCell.contentLabel.text = post?.object(forKey: "content") as! String
+        
 
         return newsCell
     }
