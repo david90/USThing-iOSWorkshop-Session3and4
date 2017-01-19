@@ -11,17 +11,24 @@ import SKYKit
 
 class NewsTableViewController: UITableViewController {
 
-    var posts = [AnyObject]()
+    var posts = [Any]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+
         self.fetchData()
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -31,18 +38,19 @@ class NewsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        print("Post count : \(self.posts.count)")
+        return self.posts.count
     }
 
     func onCompletion(_ posts:[Any]) {
         print("There are \(posts.count) posts")
         print(posts)
+        self.posts = posts
+        self.tableView.reloadData()
     }
     
     func fetchData () {
@@ -61,15 +69,16 @@ class NewsTableViewController: UITableViewController {
         })
     }
     
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let newsCell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath) as! NewsTableViewCell
+        
         // Configure the cell...
+        newsCell.titleLabel.text = "Title"
+        newsCell.contentLabel.text = "Content"
 
-        return cell
+        return newsCell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.

@@ -17,7 +17,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="IFU-4I-ZKJ"/>
-                        <segue destination="bE4-iS-TrX" kind="relationship" relationship="viewControllers" id="x97-2z-bbA"/>
+                        <segue destination="8KA-DI-6YR" kind="relationship" relationship="viewControllers" id="jem-FB-9WP"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bm8-8o-44K" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -94,33 +94,55 @@
             <point key="canvasLocation" x="-145" y="-216"/>
         </scene>
         <!--News-->
-        <scene sceneID="l8L-bc-4gd">
+        <scene sceneID="XAP-cl-Y43">
             <objects>
-                <tableViewController id="bE4-iS-TrX" customClass="NewsTableViewController" customModule="swift_workshop" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="sgW-IL-qLH" customClass="Newsstands">
+                <tableViewController id="8KA-DI-6YR" customClass="NewsTableViewController" customModule="swift_workshop" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="cjO-Ek-MVo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="scrollIndicatorInsets" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="RqQ-qb-ls6">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="newsCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="100" id="y2d-Zu-Kep" customClass="NewsTableViewCell" customModule="swift_workshop" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RqQ-qb-ls6" id="3XE-oN-wii">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y2d-Zu-Kep" id="Sob-ob-Z6z">
+                                    <frame key="frameInset" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6C8-QE-lv4">
+                                            <frame key="frameInset" minX="8" minY="8" width="359" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCd-YQ-NKG">
+                                            <frame key="frameInset" minX="8" minY="37" width="359" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.35495205026455023" green="0.35495205026455023" blue="0.35495205026455023" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="contentLabel" destination="dCd-YQ-NKG" id="47F-vG-0lS"/>
+                                    <outlet property="titleLabel" destination="6C8-QE-lv4" id="0xt-yB-dup"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="bE4-iS-TrX" id="0Xg-64-YvI"/>
-                            <outlet property="delegate" destination="bE4-iS-TrX" id="XOx-Sz-B6n"/>
+                            <outlet property="dataSource" destination="8KA-DI-6YR" id="Zxx-x5-qaj"/>
+                            <outlet property="delegate" destination="8KA-DI-6YR" id="qtO-U0-8z6"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="News" id="8mf-Q7-gAz"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <tabBarItem key="tabBarItem" title="News" id="X8w-2M-1Jf"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c3j-ZW-Upz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Vt-6P-cyy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-145" y="481"/>
+            <point key="canvasLocation" x="-146.40000000000001" y="443.92803598200902"/>
         </scene>
     </scenes>
 </document>
