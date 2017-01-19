@@ -78,6 +78,20 @@ class ViewController: UIViewController {
             }
         }
 
+    @IBAction func logoutDidTap(_ sender: AnyObject) {
+        SKYContainer.default().logout { (user, error) in
+            if (error != nil) {
+                let meError = error as NSError!
+                
+                let alert = UIAlertController(title: "Error signing up", message:meError?.skyErrorMessage(), preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            print("logged out")
+            self.updateUserStatus()
+        }
+    }
 
 }
 
