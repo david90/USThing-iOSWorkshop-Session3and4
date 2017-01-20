@@ -403,8 +403,9 @@ We can then handle the `pickedImage`
 
  You should be able to get the uploaded SKYAsset object, now you need to set it to your post and save it when you upload it.
 
- - How do we get back the image?
+ [Step 8]
 
+ - How do we get back the image?
 You can access the uploaded asset in the post record
 
  ```
@@ -431,7 +432,7 @@ Add an `photoImageView` in the cell, then we update the photo with the URL we go
 ```
 
 
- [Step 8]
+ [Step 9]
 
 1. Liking a photo 
  - Understanding the record relation
@@ -443,7 +444,7 @@ Add an `photoImageView` in the cell, then we update the photo with the URL we go
 
  > Because this part will mix up with other's data, so I strongly advice you to sign up for a new Skygear account to continue.
 
- [Step 9]
+ [Step 10]
 
 1. Tag the photo with geo location 
  - [Geolocation data type](https://docs.skygear.io/guide/cloud-db/data-types/ios/#location)
@@ -484,11 +485,10 @@ func locationManager(manager: CLLocationManager, didUpdateLocations locations: [
 
  - Query with location-based questions
 
-[Step 10]
+
 
 1. Basics in sending Push Notifications
 
-[Step 11]
 
 
 ### Summary
