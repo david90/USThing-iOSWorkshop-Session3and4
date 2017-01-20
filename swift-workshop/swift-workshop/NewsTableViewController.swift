@@ -83,6 +83,58 @@ class NewsTableViewController: UITableViewController {
         return newsCell
     }
 
+    
+    @IBAction func addButtonDidTap(_ sender: AnyObject) {
+        
+        print("add")
+        let alertController = UIAlertController(title: "Add New Post", message: "", preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
+            alert -> Void in
+            
+            let titleField = alertController.textFields![0] as UITextField
+            let contentField = alertController.textFields![1] as UITextField
+            
+            print("Title \(titleField.text), content \(contentField.text)")
+            
+            
+            let post = SKYRecord(recordType: "post")
+            post?.setObject(titleField.text, forKey: "title"  as! NSCopying)
+            post?.setObject(contentField.text, forKey: "content" as! NSCopying)
+            post?.setObject(false, forKey: "done" as NSCopying)
+            
+            SKYContainer.default().publicCloudDatabase.save(post, completion: { (record, error) in
+                if (error != nil) {
+                    print("error saving post: \(error)")
+                    return
+                }
+                
+                self.posts.insert(record, at: 0)
+                self.tableView.reloadData()
+            })
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+            (action : UIAlertAction!) -> Void in
+            alertController.dismiss(animated: true, completion: nil)
+        })
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Title"
+        }
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Content"
+        }
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
