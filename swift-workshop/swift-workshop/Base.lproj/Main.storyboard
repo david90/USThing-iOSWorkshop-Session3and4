@@ -17,7 +17,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="IFU-4I-ZKJ"/>
-                        <segue destination="8KA-DI-6YR" kind="relationship" relationship="viewControllers" id="jem-FB-9WP"/>
+                        <segue destination="37S-VV-TXa" kind="relationship" relationship="viewControllers" id="5Qd-Pk-h4K"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bm8-8o-44K" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -106,7 +106,7 @@
             <objects>
                 <tableViewController id="8KA-DI-6YR" customClass="NewsTableViewController" customModule="swift_workshop" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="cjO-Ek-MVo">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
@@ -147,10 +147,39 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="News" id="X8w-2M-1Jf"/>
+                    <navigationItem key="navigationItem" id="L0k-mh-FDi">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="NPf-0A-QC0">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C1Q-zr-2ag">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Post"/>
+                                <connections>
+                                    <action selector="addButtonDidTap:" destination="8KA-DI-6YR" eventType="touchUpInside" id="QIm-Qn-I42"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Vt-6P-cyy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-146.40000000000001" y="443.92803598200902"/>
+            <point key="canvasLocation" x="276" y="483"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="J8z-0W-j6L">
+            <objects>
+                <navigationController id="37S-VV-TXa" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="NZm-2x-GiF"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="X8G-7G-YRb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8KA-DI-6YR" kind="relationship" relationship="rootViewController" id="DC6-vk-XwB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z7k-TQ-fLd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-450" y="483"/>
         </scene>
     </scenes>
 </document>
