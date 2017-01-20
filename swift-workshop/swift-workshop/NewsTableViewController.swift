@@ -76,8 +76,14 @@ class NewsTableViewController: UITableViewController {
         
         let record = self.posts[indexPath.row]
         let post = record as? SKYRecord
+        
+        let imageAsset = post?.object(forKey: "asset") as? SKYAsset
+        print(imageAsset?.url)
+        
+        
         newsCell.titleLabel.text = post?.object(forKey: "title") as! String
         newsCell.contentLabel.text = post?.object(forKey: "content") as! String
+        
         
 
         return newsCell
