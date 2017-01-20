@@ -84,7 +84,16 @@ class NewsTableViewController: UITableViewController {
         newsCell.titleLabel.text = post?.object(forKey: "title") as! String
         newsCell.contentLabel.text = post?.object(forKey: "content") as! String
         
-        
+        newsCell.photoImageView.image = UIImage(named: "Placeholder")
+        if let imageUrl = imageAsset?.url {
+            URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                if let imageData = data {
+                    DispatchQueue.main.async {
+                        newsCell.photoImageView.image = UIImage(data: imageData)
+                    }
+                }
+                }.resume()
+        }
 
         return newsCell
     }

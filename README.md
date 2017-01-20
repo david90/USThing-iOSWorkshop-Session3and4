@@ -413,8 +413,23 @@ You can access the uploaded asset in the post record
  ```
 
 1. Displaying image with URL in iOS
- - [SDWebImage](https://github.com/rs/SDWebImage) is a popular framework.
- - To install, we need to run pod install again.
+
+Add an `photoImageView` in the cell, then we update the photo with the URL we got
+
+```
+        newsCell.photoImageView.image = UIImage(named: "Placeholder")
+        if let imageUrl = imageAsset?.url {
+            URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                if let imageData = data {
+                    DispatchQueue.main.async {
+                        newsCell.photoImageView.image = UIImage(data: imageData)
+                    }
+                }
+                }.resume()
+        }
+
+```
+
 
  [Step 8]
 

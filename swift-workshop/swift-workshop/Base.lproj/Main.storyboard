@@ -105,17 +105,17 @@
         <scene sceneID="XAP-cl-Y43">
             <objects>
                 <tableViewController id="8KA-DI-6YR" customClass="NewsTableViewController" customModule="swift_workshop" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="cjO-Ek-MVo">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="348" sectionHeaderHeight="28" sectionFooterHeight="28" id="cjO-Ek-MVo">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="newsCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="100" id="y2d-Zu-Kep" customClass="NewsTableViewCell" customModule="swift_workshop" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="newsCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="348" id="y2d-Zu-Kep" customClass="NewsTableViewCell" customModule="swift_workshop" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="348"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y2d-Zu-Kep" id="Sob-ob-Z6z">
-                                    <frame key="frameInset" width="375" height="99"/>
+                                    <frame key="frameInset" width="375" height="347"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6C8-QE-lv4">
@@ -132,10 +132,15 @@
                                             <color key="textColor" red="0.35495205026455023" green="0.35495205026455023" blue="0.35495205026455023" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2zx-zc-ywM">
+                                            <frame key="frameInset" minY="80" width="375" height="267"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="contentLabel" destination="dCd-YQ-NKG" id="47F-vG-0lS"/>
+                                    <outlet property="photoImageView" destination="2zx-zc-ywM" id="DO3-7T-MGZ"/>
                                     <outlet property="titleLabel" destination="6C8-QE-lv4" id="0xt-yB-dup"/>
                                 </connections>
                             </tableViewCell>
@@ -162,7 +167,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Vt-6P-cyy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="276" y="483"/>
+            <point key="canvasLocation" x="276" y="482.60869565217394"/>
         </scene>
         <!--Item-->
         <scene sceneID="J8z-0W-j6L">
