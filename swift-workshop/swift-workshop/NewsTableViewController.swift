@@ -87,6 +87,10 @@ class NewsTableViewController: UITableViewController {
     @IBAction func addButtonDidTap(_ sender: AnyObject) {
         
         print("add")
+        presentImagePicker();
+    }
+    
+    func presentAddPostAlert() {
         let alertController = UIAlertController(title: "Add New Post", message: "", preferredStyle: .alert)
         
         let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
@@ -131,8 +135,9 @@ class NewsTableViewController: UITableViewController {
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
-    }
 
+    
+    }
     
     
     /*
@@ -180,4 +185,25 @@ class NewsTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension NewsTableViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func presentImagePicker() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.modalPresentationStyle = .popover
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage,
+            let resizedImageData = PhotoHelper.resize(image: pickedImage, maxWidth: 800, quality: 0.9) {
+            }
+        dismiss(animated: true, completion: {
+        })
+    }
+    
 }
