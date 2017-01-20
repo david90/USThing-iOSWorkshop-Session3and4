@@ -405,7 +405,14 @@ We can then handle the `pickedImage`
 
  - How do we get back the image?
 
-1. Displaying Image in iOS
+You can access the uploaded asset in the post record
+
+ ```
+        let imageAsset = post?.object(forKey: "asset") as? SKYAsset
+        print(imageAsset?.url)
+ ```
+
+1. Displaying image with URL in iOS
  - [SDWebImage](https://github.com/rs/SDWebImage) is a popular framework.
  - To install, we need to run pod install again.
 
