@@ -302,7 +302,7 @@ We will also do much more beyond simple read / write.
     
  ```
 
-We can then handle the `pickedImage` 
+ We can then handle the `pickedImage` 
 
  NOTE: In iOS10, we will need to add `NSPhotoLibraryUsageDescription` to Info.plist to prompt the user for Photo permission.
 
@@ -406,18 +406,18 @@ We can then handle the `pickedImage`
  [Step 8]
 
  - How do we get back the image?
-You can access the uploaded asset in the post record
+ You can access the uploaded asset in the post record
 
- ```
+ ```swift
         let imageAsset = post?.object(forKey: "asset") as? SKYAsset
         print(imageAsset?.url)
  ```
 
 1. Displaying image with URL in iOS
 
-Add an `photoImageView` in the cell, then we update the photo with the URL we got
+ Add an `photoImageView` in the cell, then we update the photo with the URL we got
 
-```
+ ```
         newsCell.photoImageView.image = UIImage(named: "Placeholder")
         if let imageUrl = imageAsset?.url {
             URLSession.shared.dataTask(with: imageUrl) { data, response, error in
@@ -429,8 +429,7 @@ Add an `photoImageView` in the cell, then we update the photo with the URL we go
                 }.resume()
         }
 
-```
-
+ ```
 
  [Step 9]
 
@@ -444,7 +443,6 @@ Add an `photoImageView` in the cell, then we update the photo with the URL we go
 
  > Because this part will mix up with other's data, so I strongly advice you to sign up for a new Skygear account to continue.
 
- [Step 10]
 
 1. Tag the photo with geo location 
  - [Geolocation data type](https://docs.skygear.io/guide/cloud-db/data-types/ios/#location)
@@ -489,13 +487,71 @@ func locationManager(manager: CLLocationManager, didUpdateLocations locations: [
 
 1. Basics in sending Push Notifications
 
+ We have to setup the app to receive notification from Skygear when there is an update. First, in AppDelegate.swift, do the following:
 
+ - Make it conforms to SKYContainerDelegate
+
+ ```
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate, SKYContainerDelegate {
+ ```
+
+Register to recieve push notification
+
+ ```
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        SKYContainer.default().configAddress("https://seanphotofeed.skygeario.com/")
+        SKYContainer.default().configure(withAPIKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+
+        // Add the code below
+        SKYContainer.default().delegate = self
+        SKYContainer.default().registerDeviceCompletionHandler({ deviceID, error in
+            if let error = error {
+                print("Failed to register device: \(error)")
+            } else {
+                print("Registered device: \(deviceID)")
+                self.addSubscription(deviceID!)
+            }
+        })
+        application.registerUserNotificationSettings(UIUserNotificationSettings())
+        application.registerForRemoteNotifications()
+        // End of code to add
+
+        return true
+    }
+ ```
+
+Add the `SKYContainerDelegate` methods
+
+```
+
+    func container(_ container: SKYContainer!, didReceive notification: SKYNotification!) {
+        print("Received notification: \(notification)");
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "SkygearNotificationReceived"), object: notification)
+    }
+```
+
+In `NewsTableViewController`, we handle the refresh
+
+ ```
+override func viewDidLoad() {
+        super.viewDidLoad()
+	     reloadPhotos()
+
+        // Add the code below
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SkygearNotificationReceived"), object: nil, queue: OperationQueue.main) { (notification) in
+            self.reloadPhotos()
+        }
+    }
+
+ ```
 
 ### Summary
 1. Uploading photos via Skygear 
 1. Displaying Image in iOS
-1. Liking a photo 
-1. Tag the photo with geo location 
+1. Liking a photo (Exercise)
+1. Tag the photo with geo location (Exercise)
 1. Basics in sending Push Notifications
 
 
