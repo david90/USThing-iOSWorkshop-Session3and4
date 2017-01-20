@@ -235,24 +235,196 @@ We learnt how to to:
 - Query and display data from Skygear cloud database
 
 ### Take home exercise: 
-Can you add a “Post” inside the app? 
+Can you implement the "Add a new post" feature?
 
 ---
 
 ## Part 2 - Advanced Cloud Features
 
-In Part 2, we will talk about uploading your photos to the cloud. We will also do much more beyond simple read / write.
+In Part 2, we will talk about uploading your photos to the cloud.
+
+We will also do much more beyond simple read / write.
+
+
+## Before we begin
+- Let's make sure your app from the last session is ready, and there is the create new post version works.
+
+[Step 6]
+
+### Warm up exercise:
+- How to edit an existing post?
+ 
+ ```
+ The flow:
+  - Update the record in the original record
+  - Save it back to the cloud
+  - Implement the UI change
+ 
+ ```
+
+### Main course today!
 
 1. Uploading photos via Skygear 
- - Using the File Assets API
- - How to get back the image?
+ - How to pick a photo from iOS?
+ - Let's use the `UIImagePickerController`
+ 
+  We will need to extend the `NewsTableViewController` to implement the interface of `UINavigationCollerDelegate` and `UIImagePickerControllerDelegate`. 
+  
+  This piece of code is to be pasted outside of the `NewsTableViewController` class in `NewsTableViewController.swift`
+ 
+ ```swift
+ extension NewsTableViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+ 
+ // Add implementation here
+ 
+ }
+ ```
+ 
+ To show the Image picker, add the implementation of `presentImagePicker()`:
+ 
+ ```swift
+     func presentImagePicker() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.modalPresentationStyle = .popover
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+ ```
+
+ ``` swift
+ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        dismiss(animated: true, completion: {
+        })
+    }
+    
+ ```
+
+We can then handle the `pickedImage` 
+
+ NOTE: In iOS10, we will need to add `NSPhotoLibraryUsageDescription` to Info.plist to prompt the user for Photo permission.
+
+ - Prepare to upload the photo
+
+ Imagine one user uploading a photo that is 4K to our server. This is going to take an unreasonable amount of time for uploading, retrieving, and taking up too many space to store. Therefore, before we upload the photo, we have to resize it to a proper size. To do that, we will write a resize function in `PhotoHelper`:
+
+ ```swift
+ import UIKit
+ import SKYKit
+
+ class PhotoHelper {
+
+    static func resize(image: UIImage, maxWidth: CGFloat, quality: CGFloat = 1.0) -> Data? {
+        var actualWidth = image.size.width
+        var actualHeight = image.size.height
+        let heightRatio = actualHeight / actualWidth
+
+        print("FROM: \(actualWidth)x\(actualHeight) ratio \(heightRatio)")
+
+        if actualWidth > maxWidth {
+            actualWidth = maxWidth
+            actualHeight = maxWidth * heightRatio
+        }
+
+        print("TO: \(actualWidth)x\(actualHeight)")
+
+        let rect = CGRect(x: 0, y: 0, width: actualWidth, height: actualHeight)
+        UIGraphicsBeginImageContext(rect.size)
+        image.draw(in: rect)
+        guard let img = UIGraphicsGetImageFromCurrentImageContext(),
+            let imageData = UIImageJPEGRepresentation(img, quality) else {
+                return nil
+        }
+
+        return imageData
+     }
+ }
+ ```
+
+ To use the resize function in `PhotoHelper`, just call `PhotoHelper.resize()`
+
+ ```
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage,
+            let resizedImageData = PhotoHelper.resize(image: pickedImage, maxWidth: 800, quality: 0.9) {
+                  }
+        dismiss(animated: true, completion: {
+        
+        })
+    }
+ ```
+
+ [Step 7]
+ 
+ - Using the [File Assets API](https://docs.skygear.io/guide/cloud-db/data-types/ios/#assets)
+
+ We will be puting the photo uploading logic inside `PhotoHelper`.
+ 
+ ```
+ static func upload(imageData: Data, onCompletion: @escaping (_ uploadedAsset: SKYAsset?) -> Void) {
+        guard let asset = SKYAsset(data: imageData) else {
+            print("Cannot create SKYAsset")
+            onCompletion(nil)
+            return
+        }
+
+        asset.mimeType = "image/jpg"
+        container.uploadAsset(asset, completionHandler: { uploadedAsset, error in
+            if let error = error {
+                print("Error uploading asset: \(error)")
+                onCompletion(nil)
+            } else {
+                if let uploadedAsset = uploadedAsset {
+                    print("Asset uploaded: \(uploadedAsset)")
+                    onCompletion(uploadedAsset)
+                } else {
+                    onCompletion(nil)
+                }
+            }
+        })
+    }
+
+ ```
+
+
+ Then we call upload like this:
+ 
+ ```swift
+         PhotoHelper.upload(imageData: imageData!, onCompletion: {uploadedAsset in
+            if (uploadedAsset != nil) {
+                print("has photo")
+            } else {   
+                print("no photo")
+            }  
+        })
+ ```
+
+ You should be able to get the uploaded SKYAsset object, now you need to set it to your post and save it when you upload it.
+
+ - How do we get back the image?
 
 1. Displaying Image in iOS
  - [SDWebImage](https://github.com/rs/SDWebImage) is a popular framework.
+ - To install, we need to run pod install again.
+
+ [Step 8]
+
 1. Liking a photo 
  - Understanding the record relation
+
+ ```
+ User <- Like -> Post
+
+ ```
+
+ > Because this part will mix up with other's data, so I strongly advice you to sign up for a new Skygear account to continue.
+
+ [Step 9]
+
 1. Tag the photo with geo location 
- - Geolocation data type
+ - [Geolocation data type](https://docs.skygear.io/guide/cloud-db/data-types/ios/#location)
  - Get the current location
 
  ```
@@ -290,8 +462,26 @@ func locationManager(manager: CLLocationManager, didUpdateLocations locations: [
 
  - Query with location-based questions
 
+[Step 10]
+
+1. Basics in sending Push Notifications
+
+[Step 11]
+
+
+### Summary
+1. Uploading photos via Skygear 
+1. Displaying Image in iOS
+1. Liking a photo 
+1. Tag the photo with geo location 
+1. Basics in sending Push Notifications
+
+
 ### Take home exercise: 
 Implement a self-destruction timer (Photo will automatically distroy after 1 min) 
+
+Hint: ~~ You can set up a timestamp in the photo record~~
+
 
 
 Appendix:
