@@ -90,102 +90,71 @@ class NewsTableViewController: UITableViewController {
         presentImagePicker();
     }
     
-    func presentAddPostAlert() {
+    func presentAddPostAlert(imageData: Data?) {
         let alertController = UIAlertController(title: "Add New Post", message: "", preferredStyle: .alert)
         
-        let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
-            alert -> Void in
-            
-            let titleField = alertController.textFields![0] as UITextField
-            let contentField = alertController.textFields![1] as UITextField
-            
-            print("Title \(titleField.text), content \(contentField.text)")
-            
-            
-            let post = SKYRecord(recordType: "post")
-            post?.setObject(titleField.text, forKey: "title"  as! NSCopying)
-            post?.setObject(contentField.text, forKey: "content" as! NSCopying)
-            post?.setObject(false, forKey: "done" as NSCopying)
-            
-            SKYContainer.default().publicCloudDatabase.save(post, completion: { (record, error) in
-                if (error != nil) {
-                    print("error saving post: \(error)")
-                    return
+        
+        PhotoHelper.upload(imageData: imageData!, onCompletion: {uploadedAsset in
+            if (uploadedAsset != nil) {
+                print("has photo")
+                let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
+                    alert -> Void in
+                    
+                    let titleField = alertController.textFields![0] as UITextField
+                    let contentField = alertController.textFields![1] as UITextField
+                    
+                    print("Title \(titleField.text), content \(contentField.text)")
+                    
+                    
+                    let post = SKYRecord(recordType: "post")
+                    post?.setObject(titleField.text, forKey: "title"  as! NSCopying)
+                    post?.setObject(contentField.text, forKey: "content" as! NSCopying)
+                    post?.setObject(false, forKey: "done" as NSCopying)
+                    post?.setObject(uploadedAsset, forKey: "asset" as NSCopying)
+
+                    SKYContainer.default().publicCloudDatabase.save(post, completion: { (record, error) in
+                        if (error != nil) {
+                            print("error saving post: \(error)")
+                            return
+                        }
+                        
+                        self.posts.insert(record, at: 0)
+                        self.tableView.reloadData()
+                    })
+                    
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+                    (action : UIAlertAction!) -> Void in
+                    alertController.dismiss(animated: true, completion: nil)
+                })
+                
+                alertController.addTextField { (textField : UITextField!) -> Void in
+                    textField.placeholder = "Title"
+                }
+                alertController.addTextField { (textField : UITextField!) -> Void in
+                    textField.placeholder = "Content"
                 }
                 
-                self.posts.insert(record, at: 0)
-                self.tableView.reloadData()
-            })
+                alertController.addAction(saveAction)
+                alertController.addAction(cancelAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+            } else {
+                
+                print("no photo")
+                let alert = UIAlertController(title: "Error uploading photo", message:"Try again.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-            (action : UIAlertAction!) -> Void in
-            alertController.dismiss(animated: true, completion: nil)
-        })
-        
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Title"
-        }
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Content"
-        }
-        
-        alertController.addAction(saveAction)
-        alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-
-    
     }
     
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+// MARK: Photo Upload
 
 extension NewsTableViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -201,6 +170,7 @@ extension NewsTableViewController: UINavigationControllerDelegate, UIImagePicker
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage,
             let resizedImageData = PhotoHelper.resize(image: pickedImage, maxWidth: 800, quality: 0.9) {
+            presentAddPostAlert(imageData:resizedImageData)
             }
         dismiss(animated: true, completion: {
         })

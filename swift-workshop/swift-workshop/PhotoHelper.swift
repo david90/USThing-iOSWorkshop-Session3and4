@@ -11,6 +11,9 @@ import SKYKit
 
 class PhotoHelper {
     
+    static let container = SKYContainer.default()!
+    static let publicDB = SKYContainer.default().publicCloudDatabase!
+    
     static func resize(image: UIImage, maxWidth: CGFloat, quality: CGFloat = 1.0) -> Data? {
         var actualWidth = image.size.width
         var actualHeight = image.size.height
@@ -34,6 +37,29 @@ class PhotoHelper {
         }
         
         return imageData
+    }
+    
+    static func upload(imageData: Data, onCompletion: @escaping (_ uploadedAsset: SKYAsset?) -> Void) {
+        guard let asset = SKYAsset(data: imageData) else {
+            print("Cannot create SKYAsset")
+            onCompletion(nil)
+            return
+        }
+
+        asset.mimeType = "image/jpg"
+        container.uploadAsset(asset, completionHandler: { uploadedAsset, error in
+            if let error = error {
+                print("Error uploading asset: \(error)")
+                onCompletion(nil)
+            } else {
+                if let uploadedAsset = uploadedAsset {
+                    print("Asset uploaded: \(uploadedAsset)")
+                    onCompletion(uploadedAsset)
+                } else {
+                    onCompletion(nil)
+                }
+            }
+        })
     }
     
 }
